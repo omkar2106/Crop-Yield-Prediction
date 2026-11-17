@@ -1,0 +1,115 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Authenticated agronomist workspace preferences stored in Firestore.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Authentication user UID.",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User display name.",
+          "maxLength": 120
+        },
+        "preferredCrop": {
+          "type": "string",
+          "description": "Default target crop in the ML workbench.",
+          "maxLength": 40
+        },
+        "defaultAlgorithm": {
+          "type": "string",
+          "description": "Preferred ML model algorithm.",
+          "maxLength": 40
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server last-updated timestamp."
+        }
+      },
+      "required": ["uid", "displayName", "preferredCrop", "defaultAlgorithm", "createdAt", "updatedAt"]
+    },
+    "SavedFieldPin": {
+      "title": "SavedFieldPin",
+      "description": "Bookmarked agricultural field coordinate with recommended crop and predicted yield.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the field owner.",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Field or station name.",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "country": {
+          "type": "string",
+          "description": "Country name.",
+          "maxLength": 80
+        },
+        "latitude": {
+          "type": "number",
+          "description": "Field latitude coordinate."
+        },
+        "longitude": {
+          "type": "number",
+          "description": "Field longitude coordinate."
+        },
+        "recommendedCrop": {
+          "type": "string",
+          "description": "Top ML-detected crop species.",
+          "maxLength": 40
+        },
+        "predictedYield": {
+          "type": "number",
+          "description": "Predicted yield in tons per hectare."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server update timestamp."
+        }
+      },
+      "required": [
+        "ownerId",
+        "name",
+        "country",
+        "latitude",
+        "longitude",
+        "recommendedCrop",
+        "predictedYield",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Owner-isolated user preference profile."
+    },
+    "/savedFields/{fieldId}": {
+      "schema": { "$ref": "#/entities/SavedFieldPin" },
+      "description": "User-bookmarked agricultural field locations and ML yield snapshots."
+    }
+  }
+}

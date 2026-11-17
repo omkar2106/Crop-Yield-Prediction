@@ -1,0 +1,6 @@
+{
+  "name": "AgriYield ML",
+  "description": "Machine learning crop yield prediction workbench using live internet soil, weather, and environmental telemetry.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
